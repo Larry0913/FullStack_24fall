@@ -15,7 +15,6 @@ const server = http.createServer((req, res) => {
     if (pathname === '/') {
         res.write('Hello week2 assignment Larry!');
         res.end()
-        return;
     } 
 
     if (!filename) {
@@ -33,8 +32,7 @@ const server = http.createServer((req, res) => {
             res.write('Ready to create data.txt for client!\n');
             res.end('File created successfully.');
         });
-    }  else if (pathname.startsWith('/write/')) {
-
+    }  else if (pathname.startsWith('/write')) {
         if (!content) {
             res.end('Error: content parameter is required.');
             return;
@@ -42,22 +40,36 @@ const server = http.createServer((req, res) => {
             // Append text to the file
             // const textToAdd = pathname.replace('/write/', '');
             fs.appendFile(filePath, `${content}\n`, (err) => {
-                console.log('Server: Ready to append text to the data file.')
+                console.log('Server: Ready to append text to the data file.');
                 res.end(`Content "${content}" appended to the "${filename}".`);
             });
 
         }
         
     } else if (pathname === '/read') {
-        fs.readFile('./data.txt', 'utf8', (err, data) => {
-            console.log('Server: read data.txt')
-            res.write('Reading data.txt file\n')
-            res.end(data);
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if(err)
+            {
+                console.log(`Server: fail read "${filename}"`);
+                res.write(`Reading "${filename}" file failed.\n`);
+                res.end(data);
+            } else {
+                console.log(`Server: fail read "${filename}"`);
+                res.write(`Reading "${filename}" file successfully\n`);
+                res.end(data);
+            }
+
         });
     } else if (pathname === '/delete') {
-        fs.unlink('./data.txt', (err) => {
-            console.log('Server: delete data.txt successfully!')
-            res.end('File deleted successfully');
+        fs.unlink(filePath, (err) => {
+            if(err) {
+                console.log('Server: delete file failed');
+                res.end('File deleted failed');
+            } else {
+                console.log('Server: delete "${filename}" successfully!');
+                res.end('File deleted successfully');
+            }
+
         });
     }
 });
