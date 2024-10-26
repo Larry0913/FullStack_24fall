@@ -10,28 +10,37 @@ router.get('/', (req, res, next) => {
   });
 });
 
-router.get('/tweet', (req, res, next) => {
-  res.render('index', { 
-    title: 'Tweet', 
-    contents: 'Show tweets'
-  });
-});
-
-router.post('/', (req, res, next) => {
-  console.log(req.body);
-  data.push(req.body);
-  res.render('index', { 
-    id: data[0].id,
-    title: data[0].title, 
-    content: data[0].content
-  });
+// tweets return all tweets
+router.get('/tweets', (req, res, next) => {
+  res.json(data);
 });
 
 router.get('/tweet/:id', (req, res, next) => {
+  const tweetId = parseInt(req.params.id, 10);
+  const tweet = data.find(t => t.id === tweetId);
+  if (!tweet) {
+    return res.status(404).send("Tweet not found");
+  }
+  res.json(tweet);
+});
+
+router.post('/tweet', (req, res, next) => {
+  console.log(req.body);
+  data.push(req.body);
   res.render('index', { 
-    title: 'tweet', 
-    contents: `delete a tweet id ${req.params.id}`
+    id: req.body.id,
+    message: req.body.message,
+    author: req.body.author,
+    createdAt: new Date().toISOString(),
   });
+});
+
+router.delete('/tweet/:id', (req, res, next) => {
+  const tweetId = parseInt(req.params.id, 10);
+  const tweetIndex = data.findIndex(t => t.id === tweetId);
+  const deletedTweet = data.splice(tweetIndex, 1); // Remove tweet from the data array
+  res.json({ message: 'Tweet deleted', deletedTweet }); // Confirm deletion and show deleted tweet
+
 });
 
 
