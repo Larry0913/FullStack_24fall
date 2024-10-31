@@ -1,0 +1,13 @@
+block content
+  h1 Welcome to my books
+  each i in books
+    h2 Title: #{i.title}
+    p ISBN: #{i.isbn}
+    p Page Count: #{i.pageCount}
+    p Published Date: #{i.publishedDate}
+    img(src=i.thumbnailUrl, alt=i.title)
+    p Short Description: #{i.shortDescription}
+    p Long Description: #{i.longDescription}
+    p Status: #{i.status}
+    p Authors: #{i.authors.join(', ')}
+    p Categories: #{i.categories.join(', ')}
