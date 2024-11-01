@@ -1,0 +1,55 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+/* book list container - horizontal layout */
+.book-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 自动填充列，根据屏幕宽度调整 */
+  gap: 16px; /* gap between each book */
+  padding: 20px;
+  justify-content: center;
+}
+
+/* each book format */
+.book-item {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* img format*/
+.book-item img {
+  width: 100px; /* fix lighting */
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+/* header format */
+.book-item h3 {
+  font-size: 1em;
+  margin: 4px 0;
+  color: #333;
+  font-weight: bold;
+}
+
+/* author, pagecount, publishedAt, categories */
+.book-item p {
+  font-size: 0.85em;
+  color: #666;
+  margin: 2px 0;
+}
+
+
+
+

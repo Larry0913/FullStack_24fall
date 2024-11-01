@@ -1,0 +1,14 @@
+
+
+block content
+  <link rel="stylesheet" href='/stylesheets/style.css'>
+  h1 Book Store
+  .book-list
+    each i in books
+      .book-item
+        img(src=i.thumbnailUrl, alt=i.title)
+        h3 #{i.title}
+        p Author(s): #{i.authors.join(', ')}
+        p Page Count: #{i.pageCount}
+        p Published Date: #{i.publishedDate}
+        p Categories: #{i.categories.join(', ')}
