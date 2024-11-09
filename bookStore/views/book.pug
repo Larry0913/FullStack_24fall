@@ -10,5 +10,5 @@ block content
         h3 #{i.title}
         p Author(s): #{i.authors.join(', ')}
         p Page Count: #{i.pageCount}
-        p Published Date: #{i.publishedDate}
+        p Published Date: #{i.publishedDate && i.publishedDate.$date ? i.publishedDate.$date : 'N/A'}
         p Categories: #{i.categories.join(', ')}
