@@ -18,6 +18,14 @@ async function main() {
 
 var app = express();
 
+const cors = require('cors');
+app.use(cors({
+  origin: 'http://localhost:3000' // Allow requests from this origin
+}));
+
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
