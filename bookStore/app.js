@@ -5,15 +5,24 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 
-const mongoDB = "mongodb+srv://larry0913:llj20010913@bookstore.mh6hj.mongodb.net/BookStore";
+// MongoDB connection strings
+const mongoBookStore = "mongodb+srv://larry0913:llj20010913@bookstore.mh6hj.mongodb.net/BookStore";
+const mongoHackHub = "mongodb+srv://larry0913:llj20010913@bookstore.mh6hj.mongodb.net/hackhub";
 
-
+// Import routers if necessary
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var authRouter = require('./routes/auth')
 
 main().catch((err) => console.log(err));
 async function main() {
-  await mongoose.connect(mongoDB);
+  // Connect to the first database
+  await mongoose.connect(mongoBookStore, { useNewUrlParser: true, useUnifiedTopology: true });
+  console.log("Connected to BookStore database");
+
+  // Create a separate connection for the second database
+  mongoose.createConnection(mongoHackHub, { useNewUrlParser: true, useUnifiedTopology: true });
+  console.log("Connected to HackHub database");
 }
 
 var app = express();
@@ -38,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
